@@ -16,7 +16,7 @@
           pname = "todo-prompt-nvim";
           version = "0.1";
           src = ./.;
-          nativeBuildInputs = with pkgs; [ go luajitPackages.cjson ];
+          nativeBuildInputs = with pkgs; [ go ];
           preConfigure = ''
             export GOCACHE=$TMPDIR/go-cache
             export GOPATH="$TMPDIR/go"
