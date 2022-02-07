@@ -11,6 +11,7 @@
       let
         pkgs = nixpkgs.legacyPackages."${system}";
         buildVimPlugin = pkgs.vimUtils.buildVimPlugin;
+        currDir = builtins.getEnv "PWD";
       in rec {
         packages.todo-prompt-nvim = buildVimPlugin {
           pname = "todo-prompt-nvim";
@@ -31,7 +32,10 @@
             gnumake
             gcc
             luajit
+            luajitPackages.busted
+            luajitPackages.luacov
           ];
+          LUA_PATH = "${currDir}/lua/?.lua;${currDir}/lua/?/init.lua";
         };
       }
     );

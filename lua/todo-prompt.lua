@@ -4,7 +4,7 @@ local parser = require "todo-prompt.parser"
 local popup_options = {
 	position = "50%",
 	relative = "editor",
-	size = 65,
+	size = "75%",
 	border = {
 		style = "rounded",
 		text = {
@@ -49,7 +49,7 @@ M.AddTask = function(cb)
 	})
 	input:mount()
 
-	-- input:map("i", "<Esc>", input.input_props.on_close, { noremap = true })
+	input:map("i", "<Esc>", input.input_props.on_close, { noremap = true })
 end
 
 return M
