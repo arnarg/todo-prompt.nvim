@@ -23,7 +23,7 @@ M.parse = function(str, d)
 
 	-- Mutate date
 	local substr = string.sub(str, start, stop)
-	temp = os.date("*t", d)
+	local temp = os.date("*t", d)
 
 	if string.match(substr, "tonight") then
 		temp.hour = 23
