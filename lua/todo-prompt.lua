@@ -31,17 +31,21 @@ M.AddTask = function(cb)
 		prompt = prompt,
 		on_submit = function(val)
 			if cb ~= nil then
-				local out = parser.parse_task(val)
-				cb(out.task, out.date)
+				local task, date = parser.parse_task(val)
+				cb(task, date)
 			end
 		end,
 		on_change = function(val, b)
-			local out = parser.parse_task(val)
-			local start = out.start + #prompt
-			local stop = out.stop + #prompt
+			local _, _, start, stop = parser.parse_task(val)
+			start = start + #prompt
+			stop = stop + #prompt
 			if start ~= last_start or stop ~= last_stop then
 				vim.api.nvim_buf_clear_namespace(b, ns, 0, -1)
-				vim.api.nvim_buf_add_highlight(b, ns, "ToDoPromptDate", 0, start, stop)
+				if start ~= stop then
+					-- nvim must expect some different indexing because start is always
+					-- off by one
+					vim.api.nvim_buf_add_highlight(b, ns, "ToDoPromptDate", 0, start-1, stop)
+				end
 				last_start = start
 				last_stop = stop
 			end

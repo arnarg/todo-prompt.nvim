@@ -10,30 +10,12 @@
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}";
-        buildVimPlugin = pkgs.vimUtils.buildVimPlugin;
         currDir = builtins.getEnv "PWD";
       in rec {
-        packages.todo-prompt-nvim = buildVimPlugin {
-          pname = "todo-prompt-nvim";
-          version = "0.1";
-          src = ./.;
-          nativeBuildInputs = with pkgs; [ go ];
-          preConfigure = ''
-            export GOCACHE=$TMPDIR/go-cache
-            export GOPATH="$TMPDIR/go"
-            export GOSUMDB=off
-          '';
-        };
-        defaultPackage = packages.todo-prompt-nvim;
-
         devShell = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
-            go
-            gnumake
-            gcc
             luajit
             luajitPackages.busted
-            luajitPackages.luacov
           ];
           LUA_PATH = "${currDir}/lua/?.lua;${currDir}/lua/?/init.lua";
         };
