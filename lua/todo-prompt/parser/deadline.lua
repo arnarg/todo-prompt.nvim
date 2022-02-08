@@ -52,7 +52,7 @@ local function find_pattern(str)
 	if sta ~= nil and sto ~= nil then
 		local w, a, b = look_for_suffix(string.sub(str, sto+1))
 		if w ~= nil then
-			num_str = find.match(str, "^in%s*(%d+)", sta-1)
+			num_str = string.match(str, "^in%s*(%d+)", sta-1)
 			return tonumber(num_str), w, sta, sto + b
 		end
 	end
