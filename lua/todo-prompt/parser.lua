@@ -3,6 +3,7 @@ local casual_date = require('todo-prompt.parser.casual_date')
 local casual_time = require('todo-prompt.parser.casual_time')
 local hour = require('todo-prompt.parser.hour')
 local hour_minute = require('todo-prompt.parser.hour_minute')
+local deadline = require('todo-prompt.parser.deadline')
 
 local parsers = {
 	weekday,
@@ -10,6 +11,7 @@ local parsers = {
 	casual_time,
 	hour,
 	hour_minute,
+	deadline,
 }
 
 local M = {}
