@@ -1,3 +1,6 @@
+local util = require('todo-prompt.parser.util')
+local isolated = util.isolated
+
 local weekday_patterns = {
 	sun = { wday = 1, suffix = "day" },
 	mon = { wday = 2, suffix = "day" },
@@ -23,13 +26,16 @@ M.parse = function(str, d)
 	-- look for weekdays
 	for patt, day in pairs(weekday_patterns) do
 		local sta, sto = string.find(str, patt)
-		if sta ~= nil then
+		-- Check if suffix is also present
+		if sto ~= nil and string.match(str, "^" .. day.suffix, sto+1) then
+			sto = sto + #day.suffix
+		end
+
+		-- Make sure day is an isolated word (no alphanumeric character around)
+		if sta ~= nil and isolated(str, string.sub(str, sta, sto)) then
 			wday = day.wday
 			start = sta
 			stop = sto
-			if string.match(str, "^" .. day.suffix, stop+1) then
-				stop = stop + #day.suffix
-			end
 			break
 		end
 	end
