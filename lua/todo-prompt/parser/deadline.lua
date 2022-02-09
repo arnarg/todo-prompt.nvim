@@ -52,7 +52,7 @@ local function find_pattern(str)
 	if sta ~= nil and sto ~= nil then
 		local w, a, b = look_for_suffix(string.sub(str, sto+1))
 		if w ~= nil then
-			num_str = string.match(str, "^in%s*(%d+)", sta-1)
+			num_str = string.match(str, "^in%s*(%d+)", sta)
 			return tonumber(num_str), w, sta, sto + b
 		end
 	end
@@ -135,21 +135,20 @@ M.parse = function(str, d)
 			temp.month = temp.month + 6
 		end
 	else
-		-- TODO: write tests!
 		if string.match(exp, "sec") then
 			temp.sec = temp.sec + n
 		elseif string.match(exp, "min") then
 			temp.sec = temp.min + n
 		elseif string.match(exp, "hour") then
-			temp.min = temp.hour + n
+			temp.hour = temp.hour + n
 		elseif string.match(exp, "day") then
-			temp.hour = temp.day + n
+			temp.day = temp.day + n
 		elseif string.match(exp, "week") then
 			temp.day = temp.day + (n*7)
 		elseif string.match(exp, "month") then
-			temp.day = temp.month + n
+			temp.month = temp.month + n
 		elseif string.match(exp, "year") then
-			temp.month = temp.year + n
+			temp.year = temp.year + n
 		end
 	end
 
