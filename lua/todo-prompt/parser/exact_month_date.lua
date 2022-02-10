@@ -3,18 +3,18 @@ local isolated = util.isolated
 local include_suffix = util.include_suffix
 
 local month_patterns = {
-	jan = { num = 1, suffix = "uary" },
-	feb = { num = 2, suffix = "ruary" },
-	mar = { num = 3, suffix = "ch" },
-	apr = { num = 4, suffix = "il" },
-	may = { num = 5, suffix = nil },
-	jun = { num = 6, suffix = "e" },
-	jul = { num = 7, suffix = "y" },
-	aug = { num = 8, suffix = "ust" },
-	sep = { num = 9, suffix = "tember" },
-	oct = { num = 10, suffix = "tobe" },
-	nov = { num = 11, suffix = "ember" },
-	dec = { num = 12, suffix = "ember" },
+	jan = { num = 1, max = 31, suffix = "uary" },
+	feb = { num = 2, max = 29, suffix = "ruary" },
+	mar = { num = 3, max = 31, suffix = "ch" },
+	apr = { num = 4, max = 30, suffix = "il" },
+	may = { num = 5, max = 31, suffix = nil },
+	jun = { num = 6, max = 30, suffix = "e" },
+	jul = { num = 7, max = 31, suffix = "y" },
+	aug = { num = 8, max = 31, suffix = "ust" },
+	sep = { num = 9, max = 30, suffix = "tember" },
+	oct = { num = 10, max = 31, suffix = "tobe" },
+	nov = { num = 11, max = 30, suffix = "ember" },
+	dec = { num = 12, max = 31, suffix = "ember" },
 }
 
 local ordinal_words = {
@@ -101,7 +101,7 @@ local function check_th_suffix(str)
 end
 
 local function look_for_surrounding(str, start, stop)
-	local num, sta, sto
+	local num, max, sta, sto
 	local found_word = string.sub(str, start, stop)
 	-- look for integers
 	local before, after = string.match(str, "(%d*)%*"..found_word.."%s*(%d*)")
@@ -173,6 +173,7 @@ M.parse = function(str, d)
 
 		if sta ~= nil and isolated(str, string.sub(str, sta, sto)) then
 			month = m.num
+			max = m.max
 			start = sta
 			stop = sto
 		end
@@ -185,6 +186,12 @@ M.parse = function(str, d)
 
 	-- check for day of the month
 	start, stop, num = look_for_surrounding(str, start, stop)
+
+	-- if specified number is higher than max allowed per month
+	-- there's no match
+	if num > max then
+		return d, nil, nil
+	end
 
 	-- mutate date
 	local temp = os.date("*t", d)

@@ -22,6 +22,7 @@ Example dates it can parse:
 - Call mom **on Monday**
 - Take spot to vet **tomorrow**
 - Go to doctor **at 4pm**
+- Buy gift for wife **on twenty first of may**
 
 Parsers can also be combined (when one is for date and the other time):
 

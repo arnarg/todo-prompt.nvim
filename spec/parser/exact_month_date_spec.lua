@@ -35,6 +35,20 @@ describe("Exact month date parser", function()
 		end)
 	end)
 
+	describe("with date out of bounds", function()
+		local task = "Take out trash march 32"
+
+		it("should not modify date", function()
+			assert_unchanged_date(task, sdate)
+		end)
+
+		it("should not return substring indexes", function()
+			local _, start, stop = exact.parse(task, sdate)
+			assert.falsy(start)
+			assert.falsy(stop)
+		end)
+	end)
+
 	describe("with integer date", function()
 		describe("prefix", function()
 			local task = "Take out trash 12 march"
