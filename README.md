@@ -4,7 +4,7 @@
 
 A prompt for todos in neovim written in lua.
 
-https://user-images.githubusercontent.com/1291396/153378134-608ba5c4-f5ec-40b9-8bb6-859d991d78bd.mp4
+https://user-images.githubusercontent.com/1291396/153380753-ac07cbb3-c62a-4d88-b4bc-66ce2c787dda.mov
 
 ## Requirements
 
