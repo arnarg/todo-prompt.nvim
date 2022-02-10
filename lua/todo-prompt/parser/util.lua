@@ -7,4 +7,9 @@ M.isolated = function(str, word)
 	return prefix and suffix
 end
 
+M.include_suffix = function(str, suffix, start)
+	local sta, sto = string.find(str, "^" .. suffix, start)
+	return sto or start
+end
+
 return M

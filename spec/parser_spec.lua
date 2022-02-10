@@ -137,7 +137,6 @@ describe("Task parser", function()
 	describe("with deadline month", function()
 		local task = "Take out trash in a month"
 
-		-- TODO: fix that deadline month also detects shortened monday
 		it("should modify the date and time accordingly", function()
 			local _, d = parser.parse_task(task, sdate)
 			local parse_time = os.date("*t", d)
@@ -157,6 +156,31 @@ describe("Task parser", function()
 		it("should return correct start and stop indexes", function()
 			local _, _, start, stop = parser.parse_task(task, sdate)
 			assert.are.same("in a month", string.sub(task, start, stop))
+		end)
+	end)
+
+	describe("with exact month date and casual time", function()
+		local task = "Take out trash on february twenty second at 1pm"
+
+		it("should modify the date and time accordingly", function()
+			local _, d = parser.parse_task(task, sdate)
+			local parse_time = os.date("*t", d)
+			assert.are.equal(base_time.year, parse_time.year)
+			assert.are.equal(2, parse_time.month)
+			assert.are.equal(22, parse_time.day)
+			assert.are.equal(13, parse_time.hour)
+			assert.are.equal(0, parse_time.min)
+			assert.are.equal(0, parse_time.sec)
+		end)
+
+		it("should return the correct task", function()
+			local t = parser.parse_task(task, sdate)
+			assert.are.same("Take out trash", t)
+		end)
+
+		it("should return correct start and stop indexes", function()
+			local _, _, start, stop = parser.parse_task(task, sdate)
+			assert.are.same("on february twenty second at 1pm", string.sub(task, start, stop))
 		end)
 	end)
 end)
