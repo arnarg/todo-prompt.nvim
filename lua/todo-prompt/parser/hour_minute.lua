@@ -1,3 +1,6 @@
+local util = require('todo-prompt.parser.util')
+local isolated = util.isolated
+
 local ampm_patterns = { "a%.?m?%.?", "p%.?m?%.?" }
 
 local M = {}
@@ -8,7 +11,7 @@ M.parse = function(str, d)
 
 	-- look for hour and minute
 	local sta, sto = string.find(str, "%d%d?:%d%d")
-	if sta ~= nil then
+	if sta ~= nil and isolated(str, string.sub(str, sta, sto))  then
 		start = sta
 		stop = sto
 	end

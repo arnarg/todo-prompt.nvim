@@ -1,3 +1,6 @@
+local util = require('todo-prompt.parser.util')
+local isolated = util.isolated
+
 local integer_words = {
 	one = 1,
 	two = 2,
@@ -95,6 +98,11 @@ M.parse = function(str, d)
 	local num, exp, start, stop = find_pattern(str)
 
 	if start == nil or stop == nil then
+		return d, nil, nil
+	end
+
+	-- make sure the identified string is isolated by spaces or start/end of string
+	if not isolated(str, string.sub(str, start, stop)) then
 		return d, nil, nil
 	end
 

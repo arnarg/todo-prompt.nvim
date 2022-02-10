@@ -1,3 +1,6 @@
+local util = require('todo-prompt.parser.util')
+local isolated = util.isolated
+
 local hour_patterns = { "a%.?m?%.?", "p%.?m?%.?" }
 
 local M = {}
@@ -10,7 +13,7 @@ M.parse = function(str, d)
 	for _, patt in ipairs(hour_patterns) do
 		local sta, sto = string.find(str, "%d%d?%s*" .. patt)
 
-		if sta ~= nil then
+		if sta ~= nil and isolated(str, string.sub(str, sta, sto)) then
 			start = sta
 			stop = sto
 			break

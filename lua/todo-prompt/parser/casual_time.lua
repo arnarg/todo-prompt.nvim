@@ -1,3 +1,6 @@
+local util = require('todo-prompt.parser.util')
+local isolated = util.isolated
+
 local casual_times = { "morning", "afternoon", "evening", "noon" }
 
 local M = {}
@@ -10,7 +13,7 @@ M.parse = function(str, d)
 	for _, time in ipairs(casual_times) do
 		local sta, sto = string.find(str, time)
 
-		if sta ~= nil then
+		if sta ~= nil and isolated(str, string.sub(str, sta, sto)) then
 			start = sta
 			stop = sto
 			break
