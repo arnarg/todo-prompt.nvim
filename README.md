@@ -23,6 +23,7 @@ Example dates it can parse:
 - Take spot to vet **tomorrow**
 - Go to doctor **at 4pm**
 - Buy gift for wife **on twenty first of may**
+- Clean bathroom **21/4/2021**
 
 Parsers can also be combined (when one is for date and the other time):
 
