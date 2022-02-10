@@ -1,6 +1,6 @@
 # todo-prompt.nvim
 
-🚧 **Work in progress* 🚧
+🚧 **Work in progress** 🚧
 
 A prompt for todos in neovim written in lua.
 
